@@ -3,6 +3,13 @@
 eventsApp.controller('EventController',
     function EventController($scope) {
 
+        $scope.snippet = '<span style="color:red">hi there</span>';
+        $scope.boolValue = false;
+        $scope.myStyle = {color: 'red'};
+        $scope.myClass = "blue";
+        $scope.buttonDisabled = false;
+        $scope.sortOrder = "name";
+        $scope.queryDifficulty = "";
         $scope.event = {
             name: 'Angular Boot Camp',
             date: '07/22/2013',
@@ -48,6 +55,10 @@ eventsApp.controller('EventController',
         $scope.downVoteSession = function(session) {
             session.upVoteCount--;
         };
+
+        $scope.buttonToggle = function() {
+            this.buttonDisabled = true;
+        }
 
     }
 );

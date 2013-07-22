@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="css/bootstrap.css" />
     <link rel="stylesheet" href="css/app.css" />
 </head>
-<body>
+<body ng-cloak>
     <div class="container">
         <div class="navbar">
             <div class="navbar-inner">
@@ -19,8 +19,18 @@
             <img ng-src="{{event.imageUrl}}" alt="{{event.name}}"/>
             <div class="row">
                 <div class="span11">
-                    <h2>{{event.name}}</h2>
+                    <h2 ng-class="myClass" ng-style="myStyle" ng-bind-template="{{event.name}}  {{event.date}}"></h2>
                 </div>
+
+                <div class="span11" ng-bind-html-unsafe="snippet">some title</div>
+                <div class="span11" ng-bind-html="snippet">some title</div>
+
+                <button class="btn" ng-disabled="buttonDisabled" ng-click="buttonToggle">Disabled</button>
+
+                <h2 ng-show="boolValue">Show this</h2>
+                <h2 ng-hide="boolValue">Hide this</h2>
+
+
                 <div class="span3">
                     <div><strong>Date:</strong> {{event.date}}</div>
                     <div><strong>Time:</strong> {{event.time}}</div>
@@ -37,8 +47,23 @@
             <hr />
 
             <h3>Sessions</h3>
+
+            Order by:
+            <select ng-model="sortOrder" class="input-small">
+                <option selected value="name">Name</option>
+                <option value="-upVoteCount">Votes</option>
+            </select>
+
+            Show:
+            <select ng-model="queryDifficulty" class="input-small span3">
+                <option selected value="">All</option>
+                <option value="introductory">Intro</option>
+                <option value="intermediate">Intermediate</option>
+                <option value="advanced">Advanced</option>
+            </select>
+
             <ul class="thumbnails">
-                <li ng-repeat="session in event.sessions">
+                <li ng-repeat="session in event.sessions | orderBy:sortOrder | filter:queryDifficulty">
                     <div class="row session">
                         <div class="span0 well votingWidget">
                             <div class="votingButton" style="padding-left: 5px" ng-click="upVoteSession(session)">
@@ -71,6 +96,7 @@
     <script src="lib/underscore-min.js"></script>
     <script src="lib/bootstrap.js"></script>
     <script src="lib/angular/angular.js"></script>
+    <script src="lib/angular/angular-sanitize.js"></script>
     <script src="js/app.js"></script>
     <script src="js/controllers/EventController.js"></script>
 </body>
