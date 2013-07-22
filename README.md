@@ -1,0 +1,4 @@
+EventReg
+========
+
+AngularJs - EventReg (pluralsight)
